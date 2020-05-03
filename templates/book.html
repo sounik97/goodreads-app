@@ -1,0 +1,92 @@
+{% extends 'search.html' %}
+
+{% block body %}
+<br>
+<br>
+<br>
+<div>
+    <h3>Below are your desired book review</h3>
+</div>
+<center>
+    <h4> Book title : {{ book_dict['title'] }}</h4>
+    <!-- <table>
+        <tr>
+
+        <th> Written by </th>
+        <th> Publication Year </th>
+        <th> Isbn </th>
+        <th> Average Rating </th>
+        <th> Number of Ratings </th>
+
+        </tr>
+
+        <tr>
+            <td> {{book_dict['author'] }} </td>
+            <td> {{book_dict['year'] }} </td>
+            <td> {{book_dict['isbn'] }} </td>
+            <td> {{book_dict['average_rating'] }} </td>
+            <td> {{book_dict['work_rating'] }} </td>
+        </tr>
+
+    </table> -->
+    <ul>
+        <li> Written By : {{book_dict['author'] }} </li>
+        <li> Publication Year : {{book_dict['year'] }} </li>
+        <li> ISBN : {{book_dict['isbn'] }} </li>
+        <li> Average Rating : {{book_dict['average_rating'] }} </li>
+        <li> Number Of Rating  : {{book_dict['work_rating'] }} </li>
+    </ul>
+    {% if not review_exists %}
+    <form action="/book/{{ book_dict['isbn'] }}" method="post">
+        <div class="form-group">
+  
+          <label for="rating">
+              Rate this book!
+          </label>
+
+          <select class="form-control" name="rating" id="rating">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+  
+          <label for="review">
+              What did you think of this book?
+          </label>
+
+          <textarea class="form-control" rows="3" autocomplete="off" type= 'text' name="review_text" id="review_text">
+          </textarea>
+  
+          <button class="btn btn-primary" type="submit">Submit</button>
+  
+        </div>
+      </form>
+      {% endif %}
+      <br>
+
+    </center>
+
+      {% if review_result|length > 0 %}
+      <ul class="list-group">
+
+        {% for review in review_result %}
+
+          <li class="list-group-item">
+            Reviewer: {{ review['username'] }}<br>
+            Rating: {{ review['rating'] }}<br>
+            {{ review['review_text'] }}
+          </li>
+
+        {% endfor %}
+
+      </ul>
+
+    {% else %}
+      <h5>None. Be the first to leave a review!</h5>
+
+    {% endif %}
+
+
+{% endblock %}

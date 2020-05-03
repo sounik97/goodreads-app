@@ -1,0 +1,27 @@
+{% extends 'search.html' %}
+
+{% block body %}
+        
+       {% if results %}
+      <center>
+        <h1>Results:</h1>
+        <br />
+       
+        {% for isbn,title,author, year in results %}
+        <h1>
+          <a href ="{{ url_for('book_blueprint.book',isbn=isbn) }}">
+            <i>{{ title }}</i> - {{ author }} ({{ year }})
+        </a>
+        </h1>
+        <h5>ISBN: {{ isbn }}</h5>
+        <hr />
+        {% endfor %} 
+        {% else %}
+        <i><h1>None.</h1>
+          <h5>
+            Please note that our search function is case-sensitive as of now.
+            Please try again.
+          </h5></i>
+      </center>
+      {% endif %}
+{% endblock %} 
